@@ -4,7 +4,7 @@ A simple command-line todo application with in-memory storage, built with Python
 
 ## Features
 
-- Add new todo items
+- Add new todo items  
 - View all todo items with completion status
 - Update existing todo items
 - Delete todo items
