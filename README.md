@@ -4,7 +4,7 @@ A simple command-line todo application with in-memory storage, built with Python
 
 ## Features
 
-- Add new todo items  
+- Add new todo items
 - View all todo items with completion status
 - Update existing todo items
 - Delete todo items
@@ -12,14 +12,18 @@ A simple command-line todo application with in-memory storage, built with Python
 
 ## Requirements
 
-- Python 3.13 or higher
-- Windows users: WSL 2 recommended
+- Python 3.8 or higher
 
 ## Setup
 
 1. Clone the repository
 2. Navigate to the project directory
-3. Ensure Python 3.13+ is available in your environment
+3. Ensure Python 3.8+ is available in your environment
+4. (Optional) Create a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   ```
 
 ## Usage
 
@@ -81,8 +85,44 @@ The application provides descriptive error messages for:
 
 ## Architecture
 
-The application follows a modular architecture:
-- `main.py`: Command-line interface and application entry point
-- `task_manager.py`: Business logic and data management
-- `Task` class: Represents individual todo items
-- `TaskManager` class: Handles all CRUD operations with in-memory storage
+The application follows a modular architecture with separation of concerns:
+
+- `main.py`: Application entry point and command-line interface
+- `todo_app/`: Main package containing all application components
+  - `cli/todo_cli.py`: Command-line interface and command parsing
+  - `services/todo_service.py`: Business logic and data management
+  - `models/todo_item.py`: Data model representing individual todo items
+  - `exceptions.py`: Custom exception classes
+- `TodoItem` class: Represents individual todo items with ID, text, and completion status
+- `TodoService` class: Handles all CRUD operations with in-memory storage
+- `TodoCLI` class: Handles user commands and interacts with the TodoService
+
+## Project Structure
+
+```
+src/
+├── main.py                 # Application entry point
+├── todo_app/               # Main application package
+│   ├── __init__.py
+│   ├── cli/                # Command-line interface components
+│   │   ├── __init__.py
+│   │   └── todo_cli.py     # CLI interface and command handling
+│   ├── models/             # Data models
+│   │   ├── __init__.py
+│   │   └── todo_item.py    # TodoItem model
+│   ├── services/           # Business logic
+│   │   ├── __init__.py
+│   │   └── todo_service.py # TodoService with CRUD operations
+│   └── exceptions.py       # Custom exception classes
+```
+
+## Development
+
+This project uses a clean architecture with clear separation between:
+- Presentation layer (CLI)
+- Business logic layer (Services)
+- Data layer (Models)
+
+## Note
+
+There are some merge conflicts in the main.py file that should be resolved before further development.
