@@ -3,8 +3,7 @@ Todo CLI entry point
 Implements the command-line interface for the todo application.
 """
 import sys
-from task_manager import TaskManager
-
+from todo_app.services.todo_service import TodoService
 
 def print_help():
     """Print the help message with available commands."""
@@ -35,7 +34,7 @@ def main():
     print("Welcome to the Todo CLI Application!")
     print("Type 'help' for available commands or 'quit' to exit.")
 
-    task_manager = TaskManager()
+    todo_service = TodoService()
 
     while True:
         try:
@@ -69,12 +68,12 @@ def main():
                     description = description[1:-1]  # Remove the quotes
 
                 try:
-                    task = task_manager.add_task(description)
+                    task = todo_service.add_item(description)
                     print(f"Added task: {task}")
                 except ValueError as e:
                     print(f"Error: {e}")
             elif command == "view":
-                tasks = task_manager.get_all_tasks()
+                tasks = todo_service.get_all_items()
                 print_tasks(tasks)
             elif command == "delete":
                 if len(parts) != 2:
@@ -83,7 +82,7 @@ def main():
 
                 try:
                     task_id = int(parts[1])
-                    if task_manager.delete_task(task_id):
+                    if todo_service.delete_item(task_id):
                         print(f"Task {task_id} deleted successfully.")
                     else:
                         print(f"Error: Task with ID {task_id} not found.")
@@ -105,8 +104,8 @@ def main():
                     if new_description.startswith('"') and new_description.endswith('"') and len(new_description) > 1:
                         new_description = new_description[1:-1]  # Remove the quotes
 
-                    if task_manager.update_task(task_id, new_description):
-                        task = task_manager.get_task_by_id(task_id)
+                    if todo_service.update_item(task_id, new_description):
+                        task = todo_service.get_item_by_id(task_id)
                         print(f"Task {task_id} updated: {task}")
                     else:
                         print(f"Error: Task with ID {task_id} not found.")
@@ -122,14 +121,14 @@ def main():
                     status = parts[2].lower()
 
                     if status == "complete" or status == "done":
-                        if task_manager.mark_task_complete(task_id):
-                            task = task_manager.get_task_by_id(task_id)
+                        if todo_service.mark_item_complete(task_id):
+                            task = todo_service.get_item_by_id(task_id)
                             print(f"Task {task_id} marked as complete: {task}")
                         else:
                             print(f"Error: Task with ID {task_id} not found.")
                     elif status == "incomplete" or status == "todo":
-                        if task_manager.mark_task_incomplete(task_id):
-                            task = task_manager.get_task_by_id(task_id)
+                        if todo_service.mark_item_incomplete(task_id):
+                            task = todo_service.get_item_by_id(task_id)
                             print(f"Task {task_id} marked as incomplete: {task}")
                         else:
                             print(f"Error: Task with ID {task_id} not found.")
