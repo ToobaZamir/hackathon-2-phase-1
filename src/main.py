@@ -4,6 +4,10 @@ Implements the command-line interface for the todo application.
 """
 import sys
 from todo_app.services.todo_service import TodoService
+<<<<<<< HEAD
+=======
+
+>>>>>>> fa7103e5338a9cc62910d82455fe803d4b84e4ef
 
 def print_help():
     """Print the help message with available commands."""
